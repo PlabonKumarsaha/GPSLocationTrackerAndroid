@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
+
 public class MainActivity extends AppCompatActivity {
 
     TextView tv_lat,tv_labellon,tv_lon,tv_altitude,tv_accuracy;
@@ -14,7 +17,14 @@ public class MainActivity extends AppCompatActivity {
     Switch sw_locationsupdates,sw_gps;
     TextView tv_address;
     View divider;
+    final static int REFACTOR_UPDATE_INTERVAL =1000;
+    final static int FASTEST_UPDATE_INTERVAL =1000;
 
+
+    //Google map's api for location serice.majority of the features depend on this.
+    FusedLocationProviderClient fusedLocationProviderClient;
+  //Loacation request is a configurable file/settings related to FusedLocationProviderClient
+    LocationRequest locationRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +46,15 @@ public class MainActivity extends AppCompatActivity {
         tv_address = findViewById(R.id.tv_address);
 
         divider = findViewById(R.id.divider);
+
+        //set properties of location
+        locationRequest = new LocationRequest();
+        locationRequest.setInterval(REFACTOR_UPDATE_INTERVAL*30);
+        //if we are using maximum power then how often we want to update the location
+        locationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL*5);
+
+        //set priority about the service
+        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
 
 
