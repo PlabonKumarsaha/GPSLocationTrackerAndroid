@@ -1,5 +1,6 @@
 # GPS Location Tracker Android
 
+#GPS
 
 1.FusedLocationproviderClient - The stadard android api for rendering GPS and cell phone tower location data.
 2.Permission - allow an app to track loaction of phone
@@ -31,3 +32,17 @@ else the thing will be. ex :
 
 locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
                     tv_sensor.setText("using WIFI + tower..");
+
+10. Next use updateGPS()
+-permit from the users to track GPS
+- get the current location from the fused client
+-update the UI to show the values in the screen
+
+use fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(MainActivity.this); then ask for user permit
+
+-the using the LocationService we getFused loaction.
+-then we check for permit
+
+Now we make a UpdateGPS method which will show  the lat,long,altitude and speed of the location
+-For altitude and speed we must check if condition as all phones don't have this functionality.
+
