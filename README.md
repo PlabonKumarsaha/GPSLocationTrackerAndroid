@@ -46,3 +46,14 @@ use fusedLocationProviderClient = LocationServices.getFusedLocationProviderClien
 Now we make a UpdateGPS method which will show  the lat,long,altitude and speed of the location
 -For altitude and speed we must check if condition as all phones don't have this functionality.
 
+11. Make loactionUpdate Listener activate..check if sw_locationsupdates is truned on or nt
+then look for if the user wants to turn on or off the tracking . USe this to get location request
+ex :  fusedLocationProviderClient.requestLocationUpdates(locationRequest,locationCallBack,null);
+intsanciate LocationCallback to get the instance. Then create location call back method.
+ex :  locationCallBack = new LocationCallback(){
+            
+        }
+this method is triggered when location is updated.(the updated time). Then over ride this onLocationResult(LocationResult locationResult)  method inside
+locationCallBack. Then get the current location and store it in location insatce and updateUi function will take this location as parameter and show the location.
+check if switch is enable or not if enable show the lcoation ..else show not being tracked!
+
