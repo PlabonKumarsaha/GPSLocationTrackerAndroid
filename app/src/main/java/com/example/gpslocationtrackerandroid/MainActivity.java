@@ -127,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
         tv_lat.setText("not tracking!");
         tv_updates.setText("not tracking");
         tv_altitude.setText("not tracking");
+        tv_lon.setText("not tracking!");
         tv_accuracy.setText("not tracking");
         tv_speed.setText("no tracking!");
         //no longer updating the locationcall back!
@@ -136,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void startLocatonUpdates() {
-        tv_updates.setText("locaton not  tracked!");
+        tv_updates.setText("locaton   tracked!");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -145,10 +146,11 @@ public class MainActivity extends AppCompatActivity {
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallBack, null);
-            updateGPS();
+
             return;
         }
+        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallBack, null);
+        updateGPS();
 
     }
 
