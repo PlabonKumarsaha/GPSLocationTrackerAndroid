@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
@@ -16,26 +17,31 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int PERMISSION_FINE_REQUEST = 99;
-    TextView tv_lat,tv_labellon,tv_lon,tv_altitude,tv_accuracy;
-    TextView tv_speed,tv_sensor,tv_updates;
-    Switch sw_locationsupdates,sw_gps;
+    TextView tv_lat, tv_labellon, tv_lon, tv_altitude, tv_accuracy;
+    TextView tv_speed, tv_sensor, tv_updates;
+    Switch sw_locationsupdates, sw_gps;
     TextView tv_address;
     View divider;
-    final static int REFACTOR_UPDATE_INTERVAL =1000;
-    final static int FASTEST_UPDATE_INTERVAL =1000;
+    final static int REFACTOR_UPDATE_INTERVAL = 1000;
+    final static int FASTEST_UPDATE_INTERVAL = 1000;
 
 
     //Google map's api for location serice.majority of the features depend on this.
     FusedLocationProviderClient fusedLocationProviderClient;
-  //Loacation request is a configurable file/settings related to FusedLocationProviderClient
+    //Loacation request is a configurable file/settings related to FusedLocationProviderClient
     LocationRequest locationRequest;
+
+    //location call back instance
+    LocationCallback locationCallBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         tv_accuracy = findViewById(R.id.tv_accuracy);
         tv_speed = findViewById(R.id.tv_speed);
         tv_sensor = findViewById(R.id.tv_sensor);
-        tv_updates= findViewById(R.id.tv_updates);
+        tv_updates = findViewById(R.id.tv_updates);
 
         sw_locationsupdates = findViewById(R.id.sw_locationsupdates);
         sw_gps = findViewById(R.id.sw_gps);
@@ -60,9 +66,21 @@ public class MainActivity extends AppCompatActivity {
 
         //set properties of location
         locationRequest = new LocationRequest();
-        locationRequest.setInterval(REFACTOR_UPDATE_INTERVAL*30);
+        locationRequest.setInterval(REFACTOR_UPDATE_INTERVAL * 30);
         //if we are using maximum power then how often we want to update the location
-        locationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL*5);
+        locationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL * 5);
+
+        //this method is triggered when location is updated(the updated time)
+        locationCallBack = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                super.onLocationResult(locationResult);
+
+                Location location = locationResult.getLastLocation();
+                updateUiValues(location);
+            }
+
+        };
 
         //set priority about the service
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
@@ -70,10 +88,10 @@ public class MainActivity extends AppCompatActivity {
         sw_gps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(sw_gps.isChecked()){
+                if (sw_gps.isChecked()) {
                     locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
                     tv_sensor.setText("Using GPS sensor...");
-                }else{
+                } else {
                     locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
                     tv_sensor.setText("using WIFI + tower..");
                 }
@@ -84,11 +102,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if(sw_locationsupdates.isChecked()){
+                if (sw_locationsupdates.isChecked()) {
                     //turn on tacking
 
                     startLocatonUpdates();
-                }else{
+                } else {
                     //turn off racking
                     stopLocationUpdates();
 
@@ -102,13 +120,40 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void startLocatonUpdates() {
-        tv_updates.setText("locaton being tracked!");
+    private void stopLocationUpdates() {
+
+
+        tv_updates.setText("locaton not being tracked!");
+        tv_lat.setText("not tracking!");
+        tv_updates.setText("not tracking");
+        tv_altitude.setText("not tracking");
+        tv_accuracy.setText("not tracking");
+        tv_speed.setText("no tracking!");
+        //no longer updating the locationcall back!
+        fusedLocationProviderClient.removeLocationUpdates(locationCallBack);
+
     }
 
-    private void stopLocationUpdates(){
-        tv_updates.setText("locaton not being tracked!");
+
+    private void startLocatonUpdates() {
+        tv_updates.setText("locaton not  tracked!");
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallBack, null);
+            updateGPS();
+            return;
+        }
+
     }
+
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
