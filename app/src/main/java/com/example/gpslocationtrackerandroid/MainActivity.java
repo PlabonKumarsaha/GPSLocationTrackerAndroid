@@ -80,10 +80,34 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        sw_locationsupdates.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(sw_locationsupdates.isChecked()){
+                    //turn on tacking
+
+                    startLocatonUpdates();
+                }else{
+                    //turn off racking
+                    stopLocationUpdates();
+
+                }
+            }
+        });
+
         //call the update GPS method
 
         updateGPS();
 
+    }
+
+    private void startLocatonUpdates() {
+        tv_updates.setText("locaton being tracked!");
+    }
+
+    private void stopLocationUpdates(){
+        tv_updates.setText("locaton not being tracked!");
     }
 
     @Override
