@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -93,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         //set properties of location
         locationRequest = new LocationRequest();
         locationRequest.setInterval(REFACTOR_UPDATE_INTERVAL * 30);
@@ -138,6 +140,14 @@ public class MainActivity extends AppCompatActivity {
                     //turn off racking
                     stopLocationUpdates();
                 }
+            }
+        });
+
+        Btn_showWayPoint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,ShowSavedLocationList.class);
+                startActivity(intent);
             }
         });
 
