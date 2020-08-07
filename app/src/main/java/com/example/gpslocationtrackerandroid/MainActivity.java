@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     final static int REFACTOR_UPDATE_INTERVAL = 1000;
     final static int FASTEST_UPDATE_INTERVAL = 1000;
 
-    Button Btn_newWayPoint,Btn_showWayPoint;
+    Button Btn_newWayPoint,Btn_showWayPoint,Btn_showMap;
     //current location
     Location currentLocation;
     //list of saved locations
@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         //initialze the buttons of way points..
         Btn_newWayPoint = findViewById(R.id.Btn_newWayPoint);
         Btn_showWayPoint = findViewById(R.id.Btn_showWayPoint);
+        Btn_showMap = findViewById(R.id.Btn_showMap);
 
         savedLocations = new ArrayList<>();
 
@@ -147,6 +148,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this,ShowSavedLocationList.class);
+                startActivity(intent);
+            }
+        });
+
+        Btn_showMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,MapsActivity.class);
                 startActivity(intent);
             }
         });
