@@ -26,6 +26,7 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
     final static int FASTEST_UPDATE_INTERVAL = 1000;
 
     Button Btn_newWayPoint,Btn_showWayPoint;
+    //current location
+    Location currentLocation;
+    //list of saved locations
+    List<Location>savedLocations;
 
 
     //Google map's api for location serice.majority of the features depend on this.
@@ -51,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     LocationCallback locationCallBack;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -71,9 +76,21 @@ public class MainActivity extends AppCompatActivity {
 
         divider = findViewById(R.id.divider);
 
-        //initialze the buttons of way points
+        //initialze the buttons of way points..
         Btn_newWayPoint = findViewById(R.id.Btn_newWayPoint);
         Btn_showWayPoint = findViewById(R.id.Btn_showWayPoint);
+
+        savedLocations = new ArrayList<>();
+
+        Btn_newWayPoint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //get all the gps
+                MyApplication myApplication = (MyApplication) getApplicationContext();
+               savedLocations = myApplication.getMyLocation();
+               savedLocations.add(currentLocation);
+            }
+        });
 
         //set properties of location
         locationRequest = new LocationRequest();
@@ -196,6 +213,8 @@ public class MainActivity extends AppCompatActivity {
                     public void onSuccess(Location location) {
                      //we got permission.Now put the values of the location there.
                     updateUiValues(location);
+                    //set the current Location
+                        currentLocation = location;
 
                     }
                 });
