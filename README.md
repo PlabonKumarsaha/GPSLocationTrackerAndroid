@@ -57,3 +57,19 @@ this method is triggered when location is updated.(the updated time). Then over 
 locationCallBack. Then get the current location and store it in location insatce and updateUi function will take this location as parameter and show the location.
 check if switch is enable or not if enable show the lcoation ..else show not being tracked!
 
+12.show current adress
+- instanciate this : Geocoder geocoder = new Geocoder(MainActivity.this);
+-now apply this code to get the current location :
+
+  try{
+            //we have to take a list bacz the geocoder stores list of most recently seen adresses.so take the values in a adress list.
+            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
+            tv_address.setText(addresses.get(0).getAddressLine(0).toString()+",locality : "+addresses.get(0).getLocality()+",COUNTRY :"+addresses.get(0).getCountryName());
+
+        }catch (Exception e){
+
+            tv_address.setText("failed to get location!");
+        }
+    }
+    
+
