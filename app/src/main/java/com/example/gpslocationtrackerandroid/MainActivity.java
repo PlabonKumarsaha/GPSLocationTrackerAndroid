@@ -14,6 +14,7 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     View divider;
     final static int REFACTOR_UPDATE_INTERVAL = 1000;
     final static int FASTEST_UPDATE_INTERVAL = 1000;
+
+    Button Btn_newWayPoint,Btn_showWayPoint;
 
 
     //Google map's api for location serice.majority of the features depend on this.
@@ -67,6 +70,10 @@ public class MainActivity extends AppCompatActivity {
         tv_address = findViewById(R.id.tv_address);
 
         divider = findViewById(R.id.divider);
+
+        //initialze the buttons of way points
+        Btn_newWayPoint = findViewById(R.id.Btn_newWayPoint);
+        Btn_showWayPoint = findViewById(R.id.Btn_showWayPoint);
 
         //set properties of location
         locationRequest = new LocationRequest();
