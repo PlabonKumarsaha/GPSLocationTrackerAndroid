@@ -69,7 +69,29 @@ check if switch is enable or not if enable show the lcoation ..else show not bei
         }catch (Exception e){
 
             tv_address.setText("failed to get location!");
-        }
-    }
+        } }
+        
+        
+13. Save waypoints in list : Add a nother class "MyApplication" and extend it using Applicattion(app.Application)
+Create a singleton instance of MyApplication class.override the onCreate method. Next take a List of Location to breadcrum and set getter and setter
+for the List.
+Create two way point button : new way point and show list of way points.intilizae them in the onCreate
+.Now get the current location where the suer is. To get the current location create an instance of Location.
+ 
+ex :
+MyApplication myApplication = (MyApplication) getApplicationContext();
+               savedLocations = myApplication.getMyLocation();
+               savedLocations.add(currentLocation);
+- the upper code is for current location .use it on click. Then save the number of view points.
+android:name=".MyApplication" must be added to use MyApplication myApplication = (MyApplication) getApplicationContext(); this code.
+
+14. show the list of wyaypoints :
+1.Create a nother class ShowSavedLocationList.
+2.Create a MyApplication isntance in the ShowSavedLocationList.
+3.MyApplication myApplication = (MyApplication) getApplicationContext();
+        List<Location>savedLocation = myApplication.getMyLocation(); - this will store the list of Location in the list.
+4.Use arrayAdapter to show the list
+
+15.
     
 
