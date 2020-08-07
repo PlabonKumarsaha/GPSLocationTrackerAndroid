@@ -32,7 +32,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private static final int PERMISSION_FINE_REQUEST = 99;
-    TextView tv_lat, tv_labellon, tv_lon, tv_altitude, tv_accuracy;
+    TextView tv_lat, tv_labellon, tv_lon, tv_altitude, tv_accuracy,tv_countOfcrum;
     TextView tv_speed, tv_sensor, tv_updates;
     Switch sw_locationsupdates, sw_gps;
     TextView tv_address;
@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         tv_speed = findViewById(R.id.tv_speed);
         tv_sensor = findViewById(R.id.tv_sensor);
         tv_updates = findViewById(R.id.tv_updates);
+        tv_countOfcrum = findViewById(R.id.tv_countOfcrum);
 
         sw_locationsupdates = findViewById(R.id.sw_locationsupdates);
         sw_gps = findViewById(R.id.sw_gps);
@@ -257,5 +258,11 @@ public class MainActivity extends AppCompatActivity {
 
             tv_address.setText("failed to get location!");
         }
+
+        MyApplication myApplication = (MyApplication) getApplicationContext();
+        savedLocations = myApplication.getMyLocation();
+
+        //show the number of view points
+        tv_countOfcrum.setText(Integer.toString(savedLocations.size()));
     }
 }
