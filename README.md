@@ -92,6 +92,25 @@ android:name=".MyApplication" must be added to use MyApplication myApplication =
         List<Location>savedLocation = myApplication.getMyLocation(); - this will store the list of Location in the list.
 4.Use arrayAdapter to show the list
 
-15.
+15. Show map : create a button of show Map in the button click intent the following map activity.
+1.Take a map activity and
+2.go the xml and follow instructions.Go to the link to get the goggle map API key.Take the API key.Then add the
+key here : <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">YOUR_KEY_HERE</string>
+
+3.In the mapACtivity.java create a new list of location and create a instance of "MyApplication" to get the getAppLocationcontest() and then save all the lcoation in the savedLocation, List
+
+4. use ex in a foreach loop :
+LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(latLng);
+            markerOptions.title("Latitude : "+location.getLatitude()+ "Longitude : "+location.getLatitude());
+            mMap.addMarker(markerOptions);
+
+to set all the breadcrums in the locations
+
+16. Zoom in the last activity we droped.
+ mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastLocationPlaced,15.0f));
+
+- use a setOnMarkerClickListener .
     
 
