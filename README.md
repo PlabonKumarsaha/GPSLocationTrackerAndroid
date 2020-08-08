@@ -1,8 +1,6 @@
 # GPS Location Tracker Android
 
-#GPS
-
-1.FusedLocationproviderClient - The stadard android api for rendering GPS and cell phone tower location data.
+1. In the mainClass FusedLocationproviderClient - The stadard android api for rendering GPS and cell phone tower location data.
 2.Permission - allow an app to track loaction of phone
 3.LocationRequest- how frequent the location tracking should be.
 4.Google play service - making phone app work
