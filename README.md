@@ -1,20 +1,18 @@
 # GPS Location Tracker Android
 
-1. In the mainClass FusedLocationproviderClient - The stadard android api for rendering GPS and cell phone tower location data.
-2.Permission - allow an app to track loaction of phone
-3.LocationRequest- how frequent the location tracking should be.
-4.Google play service - making phone app work
-5.On sucess listener - update the UI when location is found
-6.Starting and stopping location trackig
-7.Geocode - automatically transalte a GPS location to a street adress.
-
-
-8.FuseLocationProvider -  using providr API we can know user's last location.
-a. set location request
-b. set an interval
-c.how fast to fetch data(between times)
+1. In the mainClass FusedLocationproviderClient - The stadard android api for rendering GPS and cell phone tower location data. <br>
+2.Permission - allow an app to track loaction of phone <br>
+3.LocationRequest- how frequent the location tracking should be.<br>
+4.Google play service - making phone app work <br>
+5.On sucess listener - update the UI when location is found <br>
+6.Starting and stopping location trackig <br>
+7.Geocode - automatically transalte a GPS location to a street adress. <br>
+8.FuseLocationProvider -  using providr API we can know user's last location. <br>
+a. set location request <br>
+b. set an interval <br>
+c.how fast to fetch data(between times) <br>
 d.add google play service. - Google Location and Activity Recognition	com.google.android.gms:play-services-location:17.0.0. add that in gradle script inside dependency and then
-sync
+sync.
 e. insatnticate, FusedLocationProviderClient which is Google map's api for location serice. Then add Loacation request is a configurable file/settings related to FusedLocationProviderClient
 f.set all prperties of locationRequest in oncreate.
 g. set priority about the service
